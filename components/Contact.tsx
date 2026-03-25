@@ -54,7 +54,7 @@ export default function Contact() {
                     </a>
 
                     <div className="contact-socials">
-                        <a href="https://www.linkedin.com/in/patrick-rakotoharilalao" target="_blank" rel="noopener noreferrer" className="social-link">LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/patrick-rakotoharilalao-a5324a362/" target="_blank" rel="noopener noreferrer" className="social-link">LinkedIn</a>
                         <a href="tel:+261339165420" className="social-link">+261 33 91 654 20</a>
                     </div>
 
