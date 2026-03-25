@@ -9,20 +9,20 @@ const skills = [
 
 export default function Skills() {
     return (
-        <section id="skills" style={{ padding: '6rem 2rem', background: 'var(--bg-2)' }}>
+        <section id="skills" style={{ padding: 'clamp(4rem, 10vw, 6rem) 1.5rem', background: 'var(--bg-2)' }}>
             <div style={{ maxWidth: 1100, margin: '0 auto' }}>
                 <p style={{
                     fontFamily: "'Space Mono', monospace", fontSize: '0.78rem',
                     color: 'var(--accent)', letterSpacing: '0.3em', textTransform: 'uppercase', marginBottom: '1rem',
                 }}>// Skills</p>
-                <h2 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', fontWeight: 800, marginBottom: '4rem' }}>
+                <h2 style={{ fontSize: 'clamp(1.6rem, 3vw, 2.5rem)', fontWeight: 800, marginBottom: '3rem' }}>
                     My tech stack
                 </h2>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                     {skills.map(({ cat, items }) => (
                         <div key={cat} style={{
-                            border: '1px solid var(--border)', padding: '2rem',
+                            border: '1px solid var(--border)', padding: '1.5rem',
                             background: 'var(--bg-3)', position: 'relative', overflow: 'hidden',
                         }}>
                             <div style={{
@@ -37,7 +37,7 @@ export default function Skills() {
                                 {items.map(item => (
                                     <li key={item} style={{
                                         padding: '0.5rem 0', borderBottom: '1px solid var(--border)',
-                                        color: 'var(--text)', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.75rem',
+                                        color: 'var(--text)', fontSize: '0.92rem', display: 'flex', alignItems: 'center', gap: '0.75rem',
                                     }}>
                                         <span style={{ color: 'var(--accent)', fontFamily: "'Space Mono', monospace", fontSize: '0.7rem' }}>▸</span>
                                         {item}
