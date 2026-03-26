@@ -53,7 +53,7 @@ export default function About() {
                         </p>
 
                         <div className="about-stats">
-                            {[['2025', 'Graduate'], ['2+', 'Projects'], ['5+', 'Technologies']].map(([num, label]) => (
+                            {[['2025', 'Graduate'], ['3+', 'Projects'], ['5+', 'Technologies']].map(([num, label]) => (
                                 <div key={label}>
                                     <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent)', fontFamily: "'Space Mono', monospace" }}>{num}</div>
                                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: "'Space Mono', monospace", letterSpacing: '0.1em' }}>{label}</div>

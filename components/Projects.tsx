@@ -7,6 +7,8 @@ const projects = [
         stack: ['Node.js', 'TypeScript', 'Express.js', 'PostgreSQL', 'Redis', 'Prisma', 'Docker'],
         status: 'Open Source',
         type: 'Personal Project',
+        github: 'https://github.com/patrick-rakotoharilalao/auth-service-project',
+        demo: '',
         impact: 'Reusable across multiple apps via API Key — eliminates the need to rebuild auth from scratch for every new project.',
         highlights: [
             'JWT + OAuth 2.0 Google + 2FA/MFA TOTP',
@@ -21,6 +23,8 @@ const projects = [
         stack: ['Java', 'Spring Boot', 'REST API', 'ERPNext', 'MariaDB'],
         status: 'Academic',
         type: 'Academic Project',
+        github: '',
+        demo: '',
         impact: 'Eliminated manual data entry entirely, reducing human errors and saving several hours of administrative work per week.',
         highlights: [
             'Bidirectional sync with ERPNext REST API',
@@ -34,6 +38,8 @@ const projects = [
         stack: ['PHP', 'Laravel', 'Vue.js', 'Nuxt.js', 'MySQL', 'Stripe'],
         status: 'Production',
         type: 'Internship · Zebu Air',
+        github: '',
+        demo: '',
         impact: 'Deployed in production at Zebu Air — handling real bookings with automated payment processing and instant boarding pass delivery.',
         highlights: [
             'Real-time multi-criteria flight search',
@@ -48,29 +54,52 @@ export default function Projects() {
     return (
         <>
             <style>{`
-        .project-card {
-          border: 1px solid var(--border);
-          background: var(--bg-2);
-          position: relative;
-          transition: border-color 0.3s, transform 0.3s;
-          display: flex;
-          flex-direction: column;
-        }
-        .project-card:hover {
-          border-color: var(--accent);
-          transform: translateY(-4px);
-        }
-        .projects-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 1.5rem;
-        }
-        @media (max-width: 640px) {
-          .projects-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      `}</style>
+                .project-card {
+                    border: 1px solid var(--border);
+                    background: var(--bg-2);
+                    position: relative;
+                    transition: border-color 0.3s, transform 0.3s;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .project-card:hover {
+                    border-color: var(--accent);
+                    transform: translateY(-4px);
+                }
+                .projects-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 1.5rem;
+                }
+                .project-link {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.4rem;
+                    font-family: 'Space Mono', monospace;
+                    font-size: 0.7rem;
+                    letter-spacing: 0.1em;
+                    text-decoration: none;
+                    padding: 0.4rem 0.9rem;
+                    border: 1px solid var(--border);
+                    color: var(--text-muted);
+                    transition: color 0.2s, border-color 0.2s;
+                }
+                .project-link:hover {
+                    color: var(--accent);
+                    border-color: var(--accent);
+                }
+                .project-link.github { }
+                .project-link.demo {
+                    border-color: var(--accent);
+                    color: var(--accent);
+                }
+                .project-link.demo:hover {
+                    background: rgba(0, 212, 255, 0.08);
+                }
+                @media (max-width: 640px) {
+                    .projects-grid { grid-template-columns: 1fr; }
+                }
+            `}</style>
 
             <section id="projects" style={{ padding: 'clamp(4rem, 10vw, 8rem) 1.5rem', background: 'var(--bg-2)' }}>
                 <div style={{ maxWidth: 1100, margin: '0 auto' }}>
@@ -90,6 +119,8 @@ export default function Projects() {
                                     background: 'linear-gradient(to right, var(--accent), var(--accent-2))',
                                 }} />
                                 <div style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)', display: 'flex', flexDirection: 'column', height: '100%' }}>
+
+                                    {/* Header */}
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1.5rem' }}>
                                         <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '0.7rem', color: 'var(--text-muted)' }}>0{i + 1}</span>
                                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.4rem' }}>
@@ -101,9 +132,11 @@ export default function Projects() {
                                         </div>
                                     </div>
 
+                                    {/* Title & desc */}
                                     <h3 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', fontWeight: 700, marginBottom: '0.85rem' }}>{p.title}</h3>
                                     <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '1.5rem', fontSize: '0.92rem' }}>{p.desc}</p>
 
+                                    {/* Highlights */}
                                     <ul style={{ listStyle: 'none', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                         {p.highlights.map((h, j) => (
                                             <li key={j} style={{ fontSize: '0.85rem', color: 'var(--text)', lineHeight: 1.5, display: 'flex', gap: '0.6rem' }}>
@@ -113,6 +146,7 @@ export default function Projects() {
                                         ))}
                                     </ul>
 
+                                    {/* Impact */}
                                     <div style={{
                                         marginBottom: '2rem', padding: '0.85rem 1rem',
                                         background: 'rgba(0, 212, 255, 0.05)', borderLeft: '2px solid var(--accent)',
@@ -124,7 +158,8 @@ export default function Projects() {
                                         <p style={{ fontSize: '0.88rem', color: 'var(--text)', lineHeight: 1.6 }}>{p.impact}</p>
                                     </div>
 
-                                    <div style={{ marginTop: 'auto', display: 'flex', gap: '0.45rem', flexWrap: 'wrap' }}>
+                                    {/* Stack */}
+                                    <div style={{ marginTop: 'auto', display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '1.2rem' }}>
                                         {p.stack.map(s => (
                                             <span key={s} style={{
                                                 fontFamily: "'Space Mono', monospace", fontSize: '0.65rem',
@@ -133,6 +168,23 @@ export default function Projects() {
                                             }}>{s}</span>
                                         ))}
                                     </div>
+
+                                    {/* Links — affichés seulement si le lien existe */}
+                                    {(p.github || p.demo) && (
+                                        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+                                            {p.github && (
+                                                <a href={p.github} target="_blank" rel="noopener noreferrer" className="project-link github">
+                                                    ↗ GitHub
+                                                </a>
+                                            )}
+                                            {p.demo && (
+                                                <a href={p.demo} target="_blank" rel="noopener noreferrer" className="project-link demo">
+                                                    ↗ Live Demo
+                                                </a>
+                                            )}
+                                        </div>
+                                    )}
+
                                 </div>
                             </div>
                         ))}
