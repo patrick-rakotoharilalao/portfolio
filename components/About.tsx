@@ -49,7 +49,7 @@ export default function About() {
                         <p style={{ color: 'var(--text-muted)', lineHeight: 1.9, fontSize: '1.05rem' }}>
                             Curious, rigorous and quality-driven, I'm looking to contribute to
                             ambitious projects where solid engineering truly makes a difference.
-                            Based in Madagascar, open to remote opportunities.
+                            Based in Madagascar, open to opportunities.
                         </p>
 
                         <div className="about-stats">
