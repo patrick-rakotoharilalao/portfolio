@@ -19,8 +19,8 @@ const projects = [
     },
     {
         title: 'ERPNext Integration',
-        desc: 'Spring Boot application with bidirectional flows via ERPNext REST API, eliminating manual data entry.',
-        stack: ['Java', 'Spring Boot', 'REST API', 'ERPNext', 'MariaDB'],
+        desc: 'Laravel application with bidirectional flows via ERPNext REST API, eliminating manual data entry.',
+        stack: ['PHP', 'Laravel', 'REST API', 'ERPNext', 'MariaDB'],
         status: 'Academic',
         type: 'Academic Project',
         github: '',
