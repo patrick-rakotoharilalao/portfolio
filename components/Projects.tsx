@@ -48,6 +48,24 @@ const projects = [
             'PDF boarding pass generation',
         ],
     },
+    {
+        title: 'Facturo — Billing SaaS',
+        desc: 'Full-stack billing system to create and send invoices, accept online payments via Stripe, and automate client reminders.',
+        stack: ['Laravel', 'PHP', 'Next.js', 'TypeScript', 'MySQL', 'Stripe', 'Tailwind CSS', 'shadcn/ui'],
+        status: 'Open Source',
+        type: 'Personal Project',
+        github: 'https://github.com/billing-saas',
+        demo: '',
+        impact: 'End-to-end invoice automation — from creation to payment confirmation — with zero manual follow-up thanks to scheduled reminders and Stripe webhooks.',
+        highlights: [
+            'Invoice lifecycle: Draft → Sent → Paid → Overdue',
+            'Stripe hosted checkout + webhook integration',
+            'PDF invoice generation with mPDF',
+            'Automated emails: delivery, reminders, confirmations',
+            'Integrates with AaaS (Auth as a Service) for authentication',
+            'Dashboard with revenue charts and top clients',
+        ],
+    },
 ]
 
 export default function Projects() {
