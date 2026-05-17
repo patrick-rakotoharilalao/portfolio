@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 const projects = [
     {
         title: 'Auth as a Service (AaaS)',
@@ -69,6 +71,10 @@ const projects = [
 ]
 
 export default function Projects() {
+    const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+    const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i)
+
     return (
         <>
             <style>{`
@@ -106,13 +112,42 @@ export default function Projects() {
                     color: var(--accent);
                     border-color: var(--accent);
                 }
-                .project-link.github { }
                 .project-link.demo {
                     border-color: var(--accent);
                     color: var(--accent);
                 }
                 .project-link.demo:hover {
                     background: rgba(0, 212, 255, 0.08);
+                }
+                .btn-toggle {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.4rem;
+                    font-family: 'Space Mono', monospace;
+                    font-size: 0.68rem;
+                    letter-spacing: 0.08em;
+                    padding: 0.4rem 0.9rem;
+                    border: 1px solid var(--border);
+                    color: var(--text-muted);
+                    background: transparent;
+                    cursor: pointer;
+                    transition: color 0.2s, border-color 0.2s;
+                    width: 100%;
+                    justify-content: center;
+                }
+                .btn-toggle:hover {
+                    color: var(--accent);
+                    border-color: var(--accent);
+                }
+                .detail-panel {
+                    overflow: hidden;
+                    max-height: 0;
+                    opacity: 0;
+                    transition: max-height 0.4s ease, opacity 0.3s ease;
+                }
+                .detail-panel.open {
+                    max-height: 800px;
+                    opacity: 1;
                 }
                 @media (max-width: 640px) {
                     .projects-grid { grid-template-columns: 1fr; }
@@ -130,82 +165,107 @@ export default function Projects() {
                     </h2>
 
                     <div className="projects-grid">
-                        {projects.map((p, i) => (
-                            <div key={p.title} className="project-card">
-                                <div style={{
-                                    position: 'absolute', top: 0, left: 0, right: 0, height: 2,
-                                    background: 'linear-gradient(to right, var(--accent), var(--accent-2))',
-                                }} />
-                                <div style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                        {projects.map((p, i) => {
+                            const isOpen = openIndex === i
 
-                                    {/* Header */}
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1.5rem' }}>
-                                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '0.7rem', color: 'var(--text-muted)' }}>0{i + 1}</span>
-                                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.4rem' }}>
-                                            <span style={{
-                                                fontFamily: "'Space Mono', monospace", fontSize: '0.62rem',
-                                                color: 'var(--accent)', border: '1px solid var(--accent)', padding: '0.18rem 0.55rem',
-                                            }}>{p.status}</span>
-                                            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '0.62rem', color: 'var(--text-muted)' }}>{p.type}</span>
-                                        </div>
-                                    </div>
-
-                                    {/* Title & desc */}
-                                    <h3 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', fontWeight: 700, marginBottom: '0.85rem' }}>{p.title}</h3>
-                                    <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '1.5rem', fontSize: '0.92rem' }}>{p.desc}</p>
-
-                                    {/* Highlights */}
-                                    <ul style={{ listStyle: 'none', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                        {p.highlights.map((h, j) => (
-                                            <li key={j} style={{ fontSize: '0.85rem', color: 'var(--text)', lineHeight: 1.5, display: 'flex', gap: '0.6rem' }}>
-                                                <span style={{ color: 'var(--accent)', fontFamily: "'Space Mono', monospace", fontSize: '0.65rem', marginTop: '0.3rem' }}>▸</span>
-                                                {h}
-                                            </li>
-                                        ))}
-                                    </ul>
-
-                                    {/* Impact */}
+                            return (
+                                <div key={p.title} className="project-card">
+                                    {/* Accent bar */}
                                     <div style={{
-                                        marginBottom: '2rem', padding: '0.85rem 1rem',
-                                        background: 'rgba(0, 212, 255, 0.05)', borderLeft: '2px solid var(--accent)',
-                                    }}>
-                                        <p style={{
-                                            fontFamily: "'Space Mono', monospace", fontSize: '0.68rem',
-                                            color: 'var(--accent)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.4rem',
-                                        }}>Impact</p>
-                                        <p style={{ fontSize: '0.88rem', color: 'var(--text)', lineHeight: 1.6 }}>{p.impact}</p>
-                                    </div>
+                                        position: 'absolute', top: 0, left: 0, right: 0, height: 2,
+                                        background: 'linear-gradient(to right, var(--accent), var(--accent-2))',
+                                    }} />
 
-                                    {/* Stack */}
-                                    <div style={{ marginTop: 'auto', display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '1.2rem' }}>
-                                        {p.stack.map(s => (
-                                            <span key={s} style={{
-                                                fontFamily: "'Space Mono', monospace", fontSize: '0.65rem',
-                                                color: 'var(--text-muted)', background: 'var(--bg-3)',
-                                                padding: '0.28rem 0.65rem', border: '1px solid var(--border)',
-                                            }}>{s}</span>
-                                        ))}
-                                    </div>
+                                    <div style={{ padding: 'clamp(1.5rem, 4vw, 2rem)', display: 'flex', flexDirection: 'column', height: '100%' }}>
 
-                                    {/* Links — affichés seulement si le lien existe */}
-                                    {(p.github || p.demo) && (
-                                        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
-                                            {p.github && (
-                                                <a href={p.github} target="_blank" rel="noopener noreferrer" className="project-link github">
-                                                    ↗ GitHub
-                                                </a>
-                                            )}
-                                            {p.demo && (
-                                                <a href={p.demo} target="_blank" rel="noopener noreferrer" className="project-link demo">
-                                                    ↗ Live Demo
-                                                </a>
+                                        {/* Header */}
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1.25rem' }}>
+                                            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '0.7rem', color: 'var(--text-muted)' }}>0{i + 1}</span>
+                                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.4rem' }}>
+                                                <span style={{
+                                                    fontFamily: "'Space Mono', monospace", fontSize: '0.62rem',
+                                                    color: 'var(--accent)', border: '1px solid var(--accent)', padding: '0.18rem 0.55rem',
+                                                }}>{p.status}</span>
+                                                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '0.62rem', color: 'var(--text-muted)' }}>{p.type}</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Title & desc — toujours visibles */}
+                                        <h3 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', fontWeight: 700, marginBottom: '0.75rem' }}>{p.title}</h3>
+                                        <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '1.25rem', fontSize: '0.9rem' }}>{p.desc}</p>
+
+                                        {/* Bouton toggle */}
+                                        <button
+                                            className="btn-toggle"
+                                            onClick={() => toggle(i)}
+                                            aria-expanded={isOpen}
+                                        >
+                                            <span style={{
+                                                display: 'inline-block',
+                                                transition: 'transform 0.3s',
+                                                transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                                            }}>↓</span>
+                                            {isOpen ? 'Hide details' : 'View details'}
+                                        </button>
+
+                                        {/* Détails — affichés/masqués */}
+                                        <div className={`detail-panel${isOpen ? ' open' : ''}`}>
+                                            <div style={{ height: '1px', background: 'var(--border)', margin: '1.25rem 0' }} />
+
+                                            {/* Highlights */}
+                                            <ul style={{ listStyle: 'none', marginBottom: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                                {p.highlights.map((h, j) => (
+                                                    <li key={j} style={{ fontSize: '0.85rem', color: 'var(--text)', lineHeight: 1.5, display: 'flex', gap: '0.6rem' }}>
+                                                        <span style={{ color: 'var(--accent)', fontFamily: "'Space Mono', monospace", fontSize: '0.65rem', marginTop: '0.3rem' }}>▸</span>
+                                                        {h}
+                                                    </li>
+                                                ))}
+                                            </ul>
+
+                                            {/* Impact */}
+                                            <div style={{
+                                                marginBottom: '1.25rem', padding: '0.85rem 1rem',
+                                                background: 'rgba(0, 212, 255, 0.05)', borderLeft: '2px solid var(--accent)',
+                                            }}>
+                                                <p style={{
+                                                    fontFamily: "'Space Mono', monospace", fontSize: '0.68rem',
+                                                    color: 'var(--accent)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.4rem',
+                                                }}>Impact</p>
+                                                <p style={{ fontSize: '0.88rem', color: 'var(--text)', lineHeight: 1.6 }}>{p.impact}</p>
+                                            </div>
+
+                                            {/* Stack */}
+                                            <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+                                                {p.stack.map(s => (
+                                                    <span key={s} style={{
+                                                        fontFamily: "'Space Mono', monospace", fontSize: '0.65rem',
+                                                        color: 'var(--text-muted)', background: 'var(--bg-3)',
+                                                        padding: '0.28rem 0.65rem', border: '1px solid var(--border)',
+                                                    }}>{s}</span>
+                                                ))}
+                                            </div>
+
+                                            {/* Links */}
+                                            {(p.github || p.demo) && (
+                                                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                                                    {p.github && (
+                                                        <a href={p.github} target="_blank" rel="noopener noreferrer" className="project-link github">
+                                                            ↗ GitHub
+                                                        </a>
+                                                    )}
+                                                    {p.demo && (
+                                                        <a href={p.demo} target="_blank" rel="noopener noreferrer" className="project-link demo">
+                                                            ↗ Live Demo
+                                                        </a>
+                                                    )}
+                                                </div>
                                             )}
                                         </div>
-                                    )}
 
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            )
+                        })}
                     </div>
                 </div>
             </section>
